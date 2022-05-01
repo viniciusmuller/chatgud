@@ -8,7 +8,7 @@ defmodule ChatgudWeb.PostsResolver do
   def create_link(_root, args, _info) do
     case Posts.create_link(args) do
       {:ok, link} -> {:ok, link}
-      {:error, changeset} -> {:error, changeset} # TODO: Properly format ECTO errors
+      {:error, changeset} -> {:error, changeset}
     end
   end
 

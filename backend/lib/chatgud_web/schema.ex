@@ -60,11 +60,13 @@ defmodule ChatgudWeb.Schema do
 
     @desc "Get profile info"
     field :get_profile, :user_private do
+      middleware(Middlewares.RequireAuthentication)
       resolve(&UsersResolver.get_profile/3)
     end
   end
 
   mutation do
+    # ---------------- Unauthenticated routes ----------------
     @desc "Create a new link"
     field :create_link, :link do
       arg(:url, non_null(:string))
@@ -89,6 +91,14 @@ defmodule ChatgudWeb.Schema do
       resolve(&PostsResolver.update_link/3)
     end
 
+    @desc "Login an user"
+    field :login, :auth_payload do
+      arg(:email, non_null(:string))
+      arg(:password, non_null(:string))
+
+      resolve(&UsersResolver.login_user/3)
+    end
+
     @desc "Register a new user"
     field :register, :user_private do
       arg(:username, non_null(:string))
@@ -99,8 +109,10 @@ defmodule ChatgudWeb.Schema do
       middleware(Middlewares.HandleChangesetErrors)
     end
 
+    # ---------------- Authenticated routes ----------------
     @desc "Delete user account"
     field :delete_account, :user_private do
+      middleware(Middlewares.RequireAuthentication)
       resolve(&UsersResolver.delete_user/3)
     end
 
@@ -110,26 +122,19 @@ defmodule ChatgudWeb.Schema do
       arg(:email, :string)
       arg(:password, :string)
 
+      middleware(Middlewares.RequireAuthentication)
       resolve(&UsersResolver.update_user/3)
       middleware(Middlewares.HandleChangesetErrors)
-    end
-
-    @desc "Login an user"
-    field :login, :auth_payload do
-      arg(:email, non_null(:string))
-      arg(:password, non_null(:string))
-
-      resolve(&UsersResolver.login_user/3)
     end
   end
 
   # subscription do
-    #   field :new_post, :post do
+  #   field :new_post, :post do
 
-    #   end
+  #   end
 
-    #   field :new_comment, :comment do
+  #   field :new_comment, :comment do
 
-    #   end
+  #   end
   # end
 end

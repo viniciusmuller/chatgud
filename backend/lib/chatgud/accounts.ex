@@ -109,6 +109,7 @@ defmodule Chatgud.Accounts do
   def update_user(%User{} = user, attrs) do
     user
     |> Ecto.Changeset.change(attrs)
+    |> User.changeset(%{})
     |> Repo.update()
   end
 
