@@ -1,32 +1,32 @@
 defmodule ChatgudWeb.PostsResolver do
   alias Chatgud.Posts
 
-  def all_links(_root, _args, _info) do
-    {:ok, Posts.list_links()}
+  def last_n_posts(_root, args, _info) do
+    {:ok, Posts.last_n_posts(args.n)}
   end
 
-  def create_link(_root, args, _info) do
-    case Posts.create_link(args) do
-      {:ok, link} -> {:ok, link}
+  def create_post(_root, args, %{context: %{current_user: _user}}) do
+    case Posts.create_post(args) do
+      {:ok, post} -> {:ok, post}
       {:error, changeset} -> {:error, changeset}
     end
   end
 
-  def delete_link(_root, args, _info) do
-    with {:ok, link} <- Posts.fetch_link(args.id),
-         {:ok, link} <- Posts.delete_link(link) do
-      {:ok, link}
+  def delete_post(_root, args, %{context: %{current_user: _user}}) do
+    with {:ok, post} <- Posts.fetch_post_by(id: args.id),
+         {:ok, post} <- Posts.delete_post(post) do
+      {:ok, post}
     else
-      {:error, msg} -> {:error, "could not delete link: #{msg}"}
+      {:error, msg} -> {:error, "could not delete post: #{msg}"}
     end
   end
 
-  def update_link(_root, args, _info) do
-    with {:ok, link} <- Posts.fetch_link(args.id),
-         {:ok, updated_link} <- Posts.update_link(link, args) do
-      {:ok, updated_link}
+  def update_post(_root, args, %{context: %{current_user: _user}}) do
+    with {:ok, post} <- Posts.fetch_post_by(id: args.id),
+         {:ok, updated_post} <- Posts.update_post(post, args) do
+      {:ok, updated_post}
     else
-      {:error, msg} -> {:error, "could not update link: #{msg}"}
+      {:error, msg} -> {:error, "could not update post: #{msg}"}
     end
   end
 end

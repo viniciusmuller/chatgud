@@ -33,6 +33,7 @@ defmodule Chatgud.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:dataloader, "~> 1.0"},
       {:argon2_elixir, "~> 3.0"},
       {:absinthe, "~> 1.6"},
       {:absinthe_plug, "~> 1.5"},

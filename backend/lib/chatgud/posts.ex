@@ -6,118 +6,120 @@ defmodule Chatgud.Posts do
   import Ecto.Query, warn: false
   alias Chatgud.Repo
 
-  alias Chatgud.Posts.Link
+  alias Chatgud.Posts.Post
 
   @doc """
-  Returns the list of links.
+  Returns a containing the last published posts.
 
   ## Examples
 
-      iex> list_links()
-      [%Link{}, ...]
+      iex> last_n_posts(10)
+      [%Post{}, ...]
 
   """
-  def list_links do
-    Repo.all(Link)
+  def last_n_posts(n) do
+    query =
+      from p in Post,
+        order_by: [desc: p.inserted_at],
+        limit: ^n
+
+    Repo.all(query)
   end
 
   @doc """
-  Gets a single link.
+  Gets a single post.
 
-  Raises `Ecto.NoResultsError` if the Link does not exist.
+  Raises `Ecto.NoResultsError` if the Post does not exist.
 
   ## Examples
 
-      iex> get_link!(123)
-      %Link{}
+      iex> get_post!(123)
+      %Post{}
 
-      iex> get_link!(456)
+      iex> get_post!(456)
       ** (Ecto.NoResultsError)
 
   """
-  def get_link!(id), do: Repo.get!(Link, id)
+  def get_post!(id), do: Repo.get!(Post, id)
 
   @doc """
-  Gets a single link.
+  Gets a single post.
 
   ## Examples
 
-      iex> fetch_link(123)
-      {:ok, %Link{}}
+      iex> fetch_post_by(id: 123)
+      {:ok, %Post{}}
 
-      iex> fetch_link(456)
-      {:error, "link not found"}
+      iex> fetch_post_by(id: 456)
+      {:error, "resource not found"}
 
   """
-  def fetch_link(id) do
-    case Repo.fetch(from l in Link, where: l.id == ^id) do
-      {:ok, link} -> {:ok, link}
-      {:error, _} -> {:error, "link not found"}
-    end
+  def fetch_post_by(clauses, opts \\ []) do
+    Repo.fetch_by(Post, clauses, opts)
   end
 
   @doc """
-  Creates a link.
+  Creates a post.
 
   ## Examples
 
-      iex> create_link(%{field: value})
-      {:ok, %Link{}}
+      iex> create_post(%{field: value})
+      {:ok, %Post{}}
 
-      iex> create_link(%{field: bad_value})
+      iex> create_post(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_link(attrs \\ %{}) do
-    %Link{}
-    |> Link.changeset(attrs)
+  def create_post(attrs \\ %{}) do
+    %Post{}
+    |> Post.changeset(attrs)
     |> Repo.insert()
   end
 
   @doc """
-  Updates a link.
+  Updates a post.
 
   ## Examples
 
-      iex> update_link(link, %{field: new_value})
-      {:ok, %Link{}}
+      iex> update_post(post, %{field: new_value})
+      {:ok, %Post{}}
 
-      iex> update_link(link, %{field: bad_value})
+      iex> update_post(post, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_link(%Link{} = link, attrs) do
-    link
-    |> Link.changeset(attrs)
+  def update_post(%Post{} = post, attrs) do
+    post
+    |> Post.changeset(attrs)
     |> Repo.update()
   end
 
   @doc """
-  Deletes a link.
+  Deletes a post.
 
   ## Examples
 
-      iex> delete_link(link)
-      {:ok, %Link{}}
+      iex> delete_post(post)
+      {:ok, %Post{}}
 
-      iex> delete_link(link)
+      iex> delete_post(post)
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_link(%Link{} = link) do
-    Repo.delete(link)
+  def delete_post(%Post{} = post) do
+    Repo.delete(post)
   end
 
   @doc """
-  Returns an `%Ecto.Changeset{}` for tracking link changes.
+  Returns an `%Ecto.Changeset{}` for tracking post changes.
 
   ## Examples
 
-      iex> change_link(link)
-      %Ecto.Changeset{data: %Link{}}
+      iex> change_post(post)
+      %Ecto.Changeset{data: %Post{}}
 
   """
-  def change_link(%Link{} = link, attrs \\ %{}) do
-    Link.changeset(link, attrs)
+  def change_post(%Post{} = post, attrs \\ %{}) do
+    Post.changeset(post, attrs)
   end
 end
