@@ -38,6 +38,25 @@ defmodule Chatgud.News do
   def get_link!(id), do: Repo.get!(Link, id)
 
   @doc """
+  Gets a single link.
+
+  ## Examples
+
+      iex> fetch_link(123)
+      {:ok, %Link{}}
+
+      iex> fetch_link(456)
+      {:error, "link not found"}
+
+  """
+  def fetch_link(id) do
+    case Repo.fetch(from l in Link, where: l.id == ^id) do
+      {:ok, link} -> {:ok, link}
+      {:error, _} -> {:error, "link not found"}
+    end
+  end
+
+  @doc """
   Creates a link.
 
   ## Examples

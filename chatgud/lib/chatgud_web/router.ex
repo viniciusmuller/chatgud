@@ -5,7 +5,7 @@ defmodule ChatgudWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/api", ChatgudWeb do
+  scope "/" do
     pipe_through :api
   end
 
@@ -23,6 +23,15 @@ defmodule ChatgudWeb.Router do
       pipe_through [:fetch_session, :protect_from_forgery]
 
       live_dashboard "/dashboard", metrics: ChatgudWeb.Telemetry
+    end
+
+    scope "/" do
+      pipe_through :api
+
+      forward "/graphiql", Absinthe.Plug.GraphiQL,
+        schema: ChatgudWeb.Schema,
+        interface: :simple,
+        context: %{pubsub: ChatgudWeb.Endpoint}
     end
   end
 end
