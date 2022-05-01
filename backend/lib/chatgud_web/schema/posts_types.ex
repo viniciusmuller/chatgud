@@ -17,7 +17,7 @@ defmodule ChatgudWeb.Schema.PostsTypes do
     field :creation_date, :naive_datetime do
       resolve(fn parent, _, _ ->
         {:ok, parent.inserted_at}
-      end
+      end)
     end
 
     field :update_date, :naive_datetime do
