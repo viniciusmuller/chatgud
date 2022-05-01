@@ -1,4 +1,4 @@
-defmodule Chatgud.News.Link do
+defmodule Chatgud.Posts.Link do
   use Ecto.Schema
   import Ecto.Changeset
 

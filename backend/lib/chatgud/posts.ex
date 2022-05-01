@@ -1,12 +1,12 @@
-defmodule Chatgud.News do
+defmodule Chatgud.Posts do
   @moduledoc """
-  The News context.
+  The Posts context.
   """
 
   import Ecto.Query, warn: false
   alias Chatgud.Repo
 
-  alias Chatgud.News.Link
+  alias Chatgud.Posts.Link
 
   @doc """
   Returns the list of links.
