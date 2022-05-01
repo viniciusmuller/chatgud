@@ -17,6 +17,10 @@ defmodule ChatgudWeb.Schema do
     field :description, non_null(:string)
   end
 
+  object :auth_payload do
+    field :token, non_null(:string)
+  end
+
   # object :post do
   #   field :id, non_null(:id)
   #   field :link, non_null(:link)
@@ -68,9 +72,10 @@ defmodule ChatgudWeb.Schema do
     @desc "Create a new user"
     field :create_user, :user do
       arg(:username, non_null(:string))
+      arg(:email, :string)
       arg(:password, non_null(:string))
 
-      resolve(&UsersResolver.create_user/3)
+      resolve(handle_errors(&UsersResolver.create_user/3))
     end
 
     @desc "Delete an user"
@@ -84,9 +89,18 @@ defmodule ChatgudWeb.Schema do
     field :update_user, :user do
       arg(:id, non_null(:id))
       arg(:username, :string)
+      arg(:email, :string)
       arg(:password, :string)
 
       resolve(&UsersResolver.update_user/3)
+    end
+
+    @desc "Login an user"
+    field :login_user, :auth_payload do
+      arg(:email, non_null(:string))
+      arg(:password, non_null(:string))
+
+      resolve(&UsersResolver.login_user/3)
     end
   end
 
@@ -95,4 +109,35 @@ defmodule ChatgudWeb.Schema do
 
   #   end
   # end
+
+  def handle_errors(fun) do
+    fn source, args, info ->
+      case Absinthe.Resolution.call(fun, source, args, info) do
+        {:error, %Ecto.Changeset{} = changeset} -> {:error, format_changeset(changeset)}
+        val -> val
+      end
+    end
+  end
+
+  def format_changeset(%Ecto.Changeset{} = changeset) do
+    errors =
+      Enum.map(changeset.errors, fn {field, detail} ->
+        %{
+          source: field,
+          detail: render_detail(detail)
+        }
+      end)
+
+    %{details: errors, message: "Validation error"}
+  end
+
+  def render_detail({message, values}) do
+    Enum.reduce(values, message, fn {k, v}, acc ->
+      String.replace(acc, "%{#{k}}", to_string(v))
+    end)
+  end
+
+  def render_detail(message) do
+    message
+  end
 end

@@ -3,11 +3,10 @@ defmodule Chatgud.Repo do
     otp_app: :chatgud,
     adapter: Ecto.Adapters.Postgres
 
-  def fetch(query) do
-    case all(query) do
-      [] -> {:error, query}
-      [obj] -> {:ok, obj}
-      _ -> raise "Expected one or no items, got many items #{inspect(query)}"
+  def fetch_by(queryable, clauses, opts) do
+    case get_by(queryable, clauses, opts) do
+      nil -> {:error, "resource not found"}
+      resource -> {:ok, resource}
     end
   end
 end

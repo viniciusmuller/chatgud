@@ -7,6 +7,7 @@ defmodule Chatgud.Accounts do
   alias Chatgud.Repo
 
   alias Chatgud.Accounts.User
+  alias Chatgud.Security
 
   @doc """
   Returns the list of users.
@@ -42,17 +43,36 @@ defmodule Chatgud.Accounts do
 
   ## Examples
 
-      iex> fetch_user(123)
+      iex> fetch_user_by(id: 23432)
       {:ok, %User{}}
 
-      iex> fetch_user(456)
+      iex> fetch_user_by(email: "foo@foo.com")
       {:error, "user not found"}
 
   """
-  def fetch_user(id) do
-    case Repo.fetch(from u in User, where: u.id == ^id) do
+  def fetch_user_by(clauses, opts \\ []) do
+    case Repo.fetch_by(User, clauses, opts) do
       {:ok, user} -> {:ok, user}
       {:error, _} -> {:error, "user not found"}
+    end
+  end
+
+  @doc """
+    Tries to login an user
+
+  ## Examples
+
+      iex> login_user(123)
+      {:ok, %{token: "..."}}
+
+      iex> login_user()
+      {:error, "user not found"}
+
+  """
+  def login_user(user, password) do
+    case Security.check_pass(user, password) do
+      {:ok, user} -> {:ok, Security.sign_user_token(user.id)}
+      {:error, _} -> {:error, "authentication failed"}
     end
   end
 
