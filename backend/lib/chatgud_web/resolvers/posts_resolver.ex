@@ -5,8 +5,9 @@ defmodule ChatgudWeb.PostsResolver do
     {:ok, Posts.last_n_posts(args.n)}
   end
 
-  def create_post(_root, args, %{context: %{current_user: _user}}) do
-    case Posts.create_post(args) do
+  def create_post(_root, args, %{context: %{current_user: user}}) do
+    data = Map.put(args, :author_id, user.id)
+    case Posts.create_post(data) do
       {:ok, post} -> {:ok, post}
       {:error, changeset} -> {:error, changeset}
     end

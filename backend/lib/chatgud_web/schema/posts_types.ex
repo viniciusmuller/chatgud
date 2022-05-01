@@ -1,19 +1,28 @@
 defmodule ChatgudWeb.Schema.PostsTypes do
   use Absinthe.Schema.Notation
+  import Absinthe.Resolution.Helpers, only: [dataloader: 1]
 
   alias ChatgudWeb.Middlewares
   alias ChatgudWeb.PostsResolver
+  alias Chatgud.Accounts.User
 
   object :post do
     field :id, non_null(:id)
     field :body, :string
-    field :title, non_null(:string)
     field :url, :string
+    field :title, non_null(:string)
+    field :karma, non_null(:integer)
+    field :author, non_null(:user_public), resolve: dataloader(User)
 
     field :creation_date, :naive_datetime do
       resolve(fn parent, _, _ ->
-        # Rename field
         {:ok, parent.inserted_at}
+      end
+    end
+
+    field :update_date, :naive_datetime do
+      resolve(fn parent, _, _ ->
+        {:ok, parent.updated_at}
       end)
     end
   end

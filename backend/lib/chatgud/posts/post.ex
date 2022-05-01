@@ -2,6 +2,8 @@ defmodule Chatgud.Posts.Post do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Chatgud.Accounts.User
+
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "posts" do
@@ -9,6 +11,7 @@ defmodule Chatgud.Posts.Post do
     field :body, :string
     field :title, :string
     field :url, :string
+    belongs_to :author, User
 
     timestamps()
   end
@@ -16,7 +19,7 @@ defmodule Chatgud.Posts.Post do
   @doc false
   def changeset(post, attrs) do
     post
-    |> cast(attrs, [:body, :karma, :title, :url])
-    |> validate_required([:body, :karma, :title])
+    |> cast(attrs, [:body, :title, :url, :author_id])
+    |> validate_required([:body, :title, :karma, :author_id])
   end
 end
