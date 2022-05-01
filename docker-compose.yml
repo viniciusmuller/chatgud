@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+    chatgud:
+      restart: always
+      build:
+        context: ./
+        dockerfile: ./Dockerfile
+      env_file: .env
+      ports:
+        - '8080:8080'
+      depends_on:
+        - postgres
+    postgres:
+      image: postgres:14.1
+      restart: always
+      env_file: .env
+      volumes:
+          - /var/lib/postgresql/data
