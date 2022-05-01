@@ -1,12 +1,23 @@
 defmodule ChatgudWeb.Router do
   use ChatgudWeb, :router
 
+  alias ChatgudWeb.Plugs
+
+  @graphql_endpoint "/api/graphql"
+
   pipeline :api do
     plug :accepts, ["json"]
   end
 
-  scope "/" do
-    pipe_through :api
+  pipeline :graphql do
+    plug :accepts, ["json"]
+    plug(Plugs.AuthContext)
+  end
+
+  scope @graphql_endpoint do
+    pipe_through :graphql
+
+    forward "/", Absinthe.Plug, schema: ChatgudWeb.Schema
   end
 
   # Enables LiveDashboard only for development
@@ -30,8 +41,9 @@ defmodule ChatgudWeb.Router do
 
       forward "/graphiql", Absinthe.Plug.GraphiQL,
         schema: ChatgudWeb.Schema,
-        interface: :simple,
-        context: %{pubsub: ChatgudWeb.Endpoint}
+        interface: :advanced,
+        context: %{pubsub: ChatgudWeb.Endpoint},
+        default_url: @graphql_endpoint
     end
   end
 end

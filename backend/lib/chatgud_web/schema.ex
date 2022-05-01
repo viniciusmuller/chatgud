@@ -3,12 +3,18 @@ defmodule ChatgudWeb.Schema do
 
   alias ChatgudWeb.PostsResolver
   alias ChatgudWeb.UsersResolver
+  alias ChatgudWeb.Middlewares
 
-  object :user do
+  object :user_public do
     field :id, non_null(:id)
     field :username, non_null(:string)
     # field :posts, non_null(list_of(:post))
     # field :comments, non_null(list_of(:comments))
+  end
+
+  object :user_private do
+    import_fields(:user_public)
+    field :email, non_null(:string)
   end
 
   object :link do
@@ -19,6 +25,7 @@ defmodule ChatgudWeb.Schema do
 
   object :auth_payload do
     field :token, non_null(:string)
+    field :user_id, non_null(:id)
   end
 
   # object :post do
@@ -33,7 +40,8 @@ defmodule ChatgudWeb.Schema do
   #   field :id, non_null(:id)
   #   field :body, non_null(:string)
   #   field :author, non_null(:user)
-  #   field :parent, :comment, resolve: assoc(:comment)
+  #   field :children, :comment, resolve: assoc(:comment)
+  #   field :karma, non_null(:int)
   #   field :post, :post, resolve: assoc(:post)
   # end
 
@@ -41,6 +49,18 @@ defmodule ChatgudWeb.Schema do
     @desc "Get all links"
     field :all_links, non_null(list_of(non_null(:link))) do
       resolve(&PostsResolver.all_links/3)
+    end
+
+    @desc "Get user"
+    field :get_user, :user_public do
+      arg(:username, non_null(:string))
+
+      resolve(&UsersResolver.get_user/3)
+    end
+
+    @desc "Get profile info"
+    field :get_profile, :user_private do
+      resolve(&UsersResolver.get_profile/3)
     end
   end
 
@@ -69,34 +89,33 @@ defmodule ChatgudWeb.Schema do
       resolve(&PostsResolver.update_link/3)
     end
 
-    @desc "Create a new user"
-    field :create_user, :user do
+    @desc "Register a new user"
+    field :register, :user_private do
       arg(:username, non_null(:string))
-      arg(:email, :string)
+      arg(:email, non_null(:string))
       arg(:password, non_null(:string))
 
-      resolve(handle_errors(&UsersResolver.create_user/3))
+      resolve(&UsersResolver.create_user/3)
+      middleware(Middlewares.HandleChangesetErrors)
     end
 
-    @desc "Delete an user"
-    field :delete_user, :user do
-      arg(:id, non_null(:id))
-
+    @desc "Delete user account"
+    field :delete_account, :user_private do
       resolve(&UsersResolver.delete_user/3)
     end
 
-    @desc "Update an user"
-    field :update_user, :user do
-      arg(:id, non_null(:id))
+    @desc "Edit user profile info"
+    field :edit_profile, :user_private do
       arg(:username, :string)
       arg(:email, :string)
       arg(:password, :string)
 
       resolve(&UsersResolver.update_user/3)
+      middleware(Middlewares.HandleChangesetErrors)
     end
 
     @desc "Login an user"
-    field :login_user, :auth_payload do
+    field :login, :auth_payload do
       arg(:email, non_null(:string))
       arg(:password, non_null(:string))
 
@@ -105,39 +124,12 @@ defmodule ChatgudWeb.Schema do
   end
 
   # subscription do
-  #   field :new_post, :post do
+    #   field :new_post, :post do
 
-  #   end
+    #   end
+
+    #   field :new_comment, :comment do
+
+    #   end
   # end
-
-  def handle_errors(fun) do
-    fn source, args, info ->
-      case Absinthe.Resolution.call(fun, source, args, info) do
-        {:error, %Ecto.Changeset{} = changeset} -> {:error, format_changeset(changeset)}
-        val -> val
-      end
-    end
-  end
-
-  def format_changeset(%Ecto.Changeset{} = changeset) do
-    errors =
-      Enum.map(changeset.errors, fn {field, detail} ->
-        %{
-          source: field,
-          detail: render_detail(detail)
-        }
-      end)
-
-    %{details: errors, message: "Validation error"}
-  end
-
-  def render_detail({message, values}) do
-    Enum.reduce(values, message, fn {k, v}, acc ->
-      String.replace(acc, "%{#{k}}", to_string(v))
-    end)
-  end
-
-  def render_detail(message) do
-    message
-  end
 end

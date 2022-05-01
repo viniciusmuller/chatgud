@@ -4,6 +4,8 @@ defmodule Chatgud.Accounts.User do
 
   alias Chatgud.Security
 
+  @fields ~w(username password email)a
+
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "users" do
@@ -18,8 +20,9 @@ defmodule Chatgud.Accounts.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:username, :password, :email])
-    |> validate_required([:username, :password, :email])
+    |> cast(attrs, @fields)
+    |> validate_required(@fields)
+    |> unique_constraint(:username)
     |> unique_constraint(:email)
     |> put_pass_hash()
   end
