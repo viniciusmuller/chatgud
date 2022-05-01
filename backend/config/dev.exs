@@ -7,8 +7,12 @@ config :chatgud, Chatgud.Repo,
   hostname: "localhost",
   database: "chatgud_dev",
   stacktrace: true,
+  migration_primary_key: [name: :id, type: :binary_id],
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
+
+config :chatgud, :generators,
+  binary_id: true
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
