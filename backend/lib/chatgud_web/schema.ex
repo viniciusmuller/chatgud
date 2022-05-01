@@ -2,13 +2,14 @@ defmodule ChatgudWeb.Schema do
   use Absinthe.Schema
 
   alias ChatgudWeb.PostsResolver
+  alias ChatgudWeb.UsersResolver
 
-  # object :user do
-  #   field :id, non_null(:id)
-  #   field :username, non_null(:link)
-  #   field :posts, non_null(list_of(:post))
-  #   field :comments, non_null(list_of(:comments))
-  # end
+  object :user do
+    field :id, non_null(:id)
+    field :username, non_null(:string)
+    # field :posts, non_null(list_of(:post))
+    # field :comments, non_null(list_of(:comments))
+  end
 
   object :link do
     field :id, non_null(:id)
@@ -29,6 +30,7 @@ defmodule ChatgudWeb.Schema do
   #   field :body, non_null(:string)
   #   field :author, non_null(:user)
   #   field :parent, :comment, resolve: assoc(:comment)
+  #   field :post, :post, resolve: assoc(:post)
   # end
 
   query do
@@ -61,6 +63,30 @@ defmodule ChatgudWeb.Schema do
       arg(:description, :string)
 
       resolve(&PostsResolver.update_link/3)
+    end
+
+    @desc "Create a new user"
+    field :create_user, :user do
+      arg(:username, non_null(:string))
+      arg(:password, non_null(:string))
+
+      resolve(&UsersResolver.create_user/3)
+    end
+
+    @desc "Delete an user"
+    field :delete_user, :user do
+      arg(:id, non_null(:id))
+
+      resolve(&UsersResolver.delete_user/3)
+    end
+
+    @desc "Update an user"
+    field :update_user, :user do
+      arg(:id, non_null(:id))
+      arg(:username, :string)
+      arg(:password, :string)
+
+      resolve(&UsersResolver.update_user/3)
     end
   end
 
