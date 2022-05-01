@@ -14,9 +14,20 @@
       {
         devShell = with pkgs; mkShell {
           buildInputs = [
+            # backend
             elixir
             elixir_ls
+
+            # frontend
+            yarn
+            nodejs
+            nodePackages."@angular/cli"
+            nodePackages.typescript-language-server
+
+            # infrastructure
             docker-compose
+
+            # misc
             rnix-lsp
           ];
         };
