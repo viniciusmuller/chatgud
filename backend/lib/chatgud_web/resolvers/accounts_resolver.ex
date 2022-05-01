@@ -1,4 +1,4 @@
-defmodule ChatgudWeb.UsersResolver do
+defmodule ChatgudWeb.AccountsResolver do
   alias Chatgud.Accounts
 
   # ------------- Authenticated routes -------------
