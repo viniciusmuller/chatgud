@@ -7,7 +7,7 @@ import { Post } from '../types/posts';
   styleUrls: ['./feed.component.css']
 })
 export class FeedComponent implements OnInit {
-  @Input() posts: Post[];
+  @Input() posts?: Post[];
   @Output('postSelected') postSelectedEvent = new EventEmitter<string>();
 
   constructor() {

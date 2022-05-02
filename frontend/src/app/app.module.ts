@@ -12,6 +12,8 @@ import { FeedComponent } from './feed/feed.component';
 import { PostPreviewComponent } from './post-preview/post-preview.component';
 import { TruncatePipe } from './pipes/truncate.pipe';
 import { PostComponent } from './post/post.component';
+import { CommentComponent } from './comment/comment.component';
+import { CommentTreeComponent } from './comment-tree/comment-tree.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { PostComponent } from './post/post.component';
     FeedComponent,
     PostPreviewComponent,
     TruncatePipe,
-    PostComponent
+    PostComponent,
+    CommentComponent,
+    CommentTreeComponent
   ],
   imports: [
     BrowserModule,

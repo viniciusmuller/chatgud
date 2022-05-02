@@ -23,7 +23,8 @@ export interface UserPrivate extends UserPublic {
 }
 
 export interface Comment {
-  id: string;
+  id?: string;
+  parentId?: string;
   post?: Post;
   author?: UserPublic;
   body: string;

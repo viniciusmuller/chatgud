@@ -7,11 +7,9 @@ import { Post } from '../types/posts';
   styleUrls: ['./post.component.css']
 })
 export class PostComponent implements OnInit {
-  @Input() post: Post | null;
+  @Input() post?: Post;
 
-  constructor() {
-    this.post = null
-  }
+  constructor() { }
 
   ngOnInit(): void { }
 }

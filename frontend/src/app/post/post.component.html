@@ -13,9 +13,12 @@
     <hr>
     <p *ngIf="post.comments" [ngPlural]="post.comments.length">
       {{post.comments.length}}
-      <ng-template ngPluralCase="=1">comment</ng-template>
+      <ng-template ngPluralCase="<=1">comment</ng-template>
       <ng-template ngPluralCase="other">comments</ng-template>
     </p>
+    <div *ngIf="post.comments && post.comments.length > 0">
+      <app-comment-tree [comments]="post.comments"></app-comment-tree>
+    </div>
   </div>
 </div>
 
