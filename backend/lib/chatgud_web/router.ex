@@ -41,9 +41,10 @@ defmodule ChatgudWeb.Router do
 
       forward "/graphiql", Absinthe.Plug.GraphiQL,
         schema: ChatgudWeb.Schema,
-        interface: :advanced,
+        interface: :playground,
         context: %{pubsub: ChatgudWeb.Endpoint},
-        default_url: @graphql_endpoint
+        default_url: @graphql_endpoint,
+        socket: ChatgudWeb.UserSocket
     end
   end
 end

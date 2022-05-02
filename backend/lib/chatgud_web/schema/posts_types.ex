@@ -67,7 +67,6 @@ defmodule ChatgudWeb.Schema.PostsTypes do
       arg(:id, non_null(:id))
 
       middleware(Middlewares.RequireAuthentication)
-      middleware(Middlewares.RequireResourceOwnership, owner_field: :author_id)
       resolve(&PostsResolver.delete_post/3)
     end
 
@@ -79,9 +78,16 @@ defmodule ChatgudWeb.Schema.PostsTypes do
       arg(:body, :string)
 
       middleware(Middlewares.RequireAuthentication)
-      middleware(Middlewares.RequireResourceOwnership, owner_field: :author_id)
       resolve(&PostsResolver.update_post/3)
       middleware(Middlewares.HandleChangesetErrors)
+    end
+  end
+
+  object :post_subscriptions do
+    field :new_post, :post do
+      config(fn _args, _info ->
+        {:ok, topic: "*", context_id: "global"}
+      end)
     end
   end
 
@@ -103,7 +109,6 @@ defmodule ChatgudWeb.Schema.PostsTypes do
       arg(:body, non_null(:string))
 
       middleware(Middlewares.RequireAuthentication)
-      middleware(Middlewares.RequireResourceOwnership, owner_field: :author_id)
       resolve(&PostsResolver.update_comment/3)
       middleware(Middlewares.HandleChangesetErrors)
     end
@@ -113,8 +118,39 @@ defmodule ChatgudWeb.Schema.PostsTypes do
       arg(:id, non_null(:id))
 
       middleware(Middlewares.RequireAuthentication)
-      middleware(Middlewares.RequireResourceOwnership, owner_field: :author_id)
       resolve(&PostsResolver.delete_comment/3)
+    end
+  end
+
+  object :comment_subscriptions do
+    field :new_comment, :comment do
+      arg(:post_id, non_null(:id))
+
+      config(fn args, _info ->
+        {:ok, topic: args.post_id, context_id: "global"}
+      end)
+
+      trigger(:create_comment, topic: fn comment -> comment.post_id end)
+    end
+
+    field :comment_deleted, :comment do
+      arg(:post_id, non_null(:id))
+
+      config(fn args, _info ->
+        {:ok, topic: args.post_id, context_id: "global"}
+      end)
+
+      trigger(:delete_comment, topic: fn comment -> comment.post_id end)
+    end
+
+    field :comment_edited, :comment do
+      arg(:post_id, non_null(:id))
+
+      config(fn args, _info ->
+        {:ok, topic: args.post_id, context_id: "global"}
+      end)
+
+      trigger(:edit_comment, topic: fn comment -> comment.post_id end)
     end
   end
 end

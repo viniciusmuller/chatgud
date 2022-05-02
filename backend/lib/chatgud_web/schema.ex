@@ -37,4 +37,9 @@ defmodule ChatgudWeb.Schema do
     import_fields(:post_mutations)
     import_fields(:comment_mutations)
   end
+
+  subscription do
+    import_fields(:post_subscriptions)
+    import_fields(:comment_subscriptions)
+  end
 end

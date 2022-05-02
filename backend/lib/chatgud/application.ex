@@ -15,9 +15,10 @@ defmodule Chatgud.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Chatgud.PubSub},
       # Start the Endpoint (http/https)
-      ChatgudWeb.Endpoint
+      ChatgudWeb.Endpoint,
       # Start a worker by calling: Chatgud.Worker.start_link(arg)
       # {Chatgud.Worker, arg}
+      {Absinthe.Subscription, ChatgudWeb.Endpoint}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

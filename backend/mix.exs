@@ -36,6 +36,7 @@ defmodule Chatgud.MixProject do
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:dataloader, "~> 1.0"},
       {:argon2_elixir, "~> 3.0"},
+      {:absinthe_phoenix, "~> 2.0"},
       {:absinthe, "~> 1.6"},
       {:absinthe_plug, "~> 1.5"},
       {:phoenix, "~> 1.6.7"},
