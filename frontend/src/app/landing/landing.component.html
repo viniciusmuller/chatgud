@@ -1,5 +1,6 @@
-<h1>Chatgud</h1>
-<li id="login-register">
-  <a routerLink="/login" routerLinkActive="active">login</a>
-  <a routerLink="/register" routerLinkActive="active">register</a>
-</li>
+<app-navbar></app-navbar>
+
+<div id="app">
+  <app-feed [posts]=posts></app-feed>
+  <app-post id="posts" [post]="currentPost" ></app-post>
+</div>

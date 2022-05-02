@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Post } from '../types/posts';
 
 @Component({
   selector: 'app-landing',
@@ -6,10 +7,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./landing.component.css']
 })
 export class LandingComponent implements OnInit {
+  posts: Post[] = [
+    { id: "aaa", title: "aa", karma: 0, body: "yeahhh boy" },
+    { id: "aaa", title: "aa", karma: 0, body: "yeahhh boy" },
+    { id: "aaa", title: "aa", karma: 0, body: "yeahhh boy" }
+  ]
 
-  constructor() { }
+  currentPost: Post | null;
 
-  ngOnInit(): void {
+  constructor() {
+    this.currentPost = null;
   }
 
+  ngOnInit(): void { }
 }

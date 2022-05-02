@@ -1,0 +1,12 @@
+<div id="post-container">
+  <div *ngIf="post; else noCurrentPost">
+    <h1>{{post.title}}</h1>
+  </div>
+</div>
+
+<ng-template #noCurrentPost>
+  <div id="no-post">
+    <h2>No post selected</h2>
+    <p>Select a post to start reading and interacting...</p>
+  </div>
+</ng-template>

@@ -1,0 +1,6 @@
+<div *ngIf="post">
+  <h2>{{post.karma}} - {{post.title}}</h2>
+  <p *ngIf="post.author">by {{post.author.id}}</p>
+  <p *ngIf="post.body">{{post.body | truncate:120:50}}</p>
+  <p *ngIf="post.comments">{{post.comments.length}} comments</p>
+</div>

@@ -1,4 +1,12 @@
-#login-register {
+#app {
   display: flex;
   justify-content: space-between;
+}
+
+#app > * {
+  width: 50%;
+}
+
+#posts {
+  border-left: 1px solid black;
 }

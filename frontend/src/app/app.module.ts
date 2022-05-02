@@ -7,6 +7,11 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { LandingComponent } from './landing/landing.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { FeedComponent } from './feed/feed.component';
+import { PostPreviewComponent } from './post-preview/post-preview.component';
+import { TruncatePipe } from './pipes/truncate.pipe';
+import { PostComponent } from './post/post.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +19,12 @@ import { LandingComponent } from './landing/landing.component';
     LoginComponent,
     RegisterComponent,
     PageNotFoundComponent,
-    LandingComponent
+    LandingComponent,
+    NavbarComponent,
+    FeedComponent,
+    PostPreviewComponent,
+    TruncatePipe,
+    PostComponent
   ],
   imports: [
     BrowserModule,
