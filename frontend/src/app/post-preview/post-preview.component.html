@@ -1,6 +1,16 @@
 <div *ngIf="post">
   <h2>{{post.karma}} - {{post.title}}</h2>
-  <p *ngIf="post.author">by {{post.author.id}}</p>
-  <p *ngIf="post.body">{{post.body | truncate:120:50}}</p>
-  <p *ngIf="post.comments">{{post.comments.length}} comments</p>
+  <p *ngIf="post.author">
+    by {{post.author.username}}, at: {{post.creationDate | date:'medium'}}
+  </p>
+  <p *ngIf="post.creationDate != post.updateDate">
+    last update at: {{post.updateDate | date:'medium'}}
+  </p>
+  <p *ngIf="post.comments" [ngPlural]="post.comments.length">
+    {{post.comments.length}}
+    <ng-template ngPluralCase="=1">comment</ng-template>
+    <ng-template ngPluralCase="other">comments</ng-template>
+  </p>
+
+  <p *ngIf="post.body">{{post.body | truncate:65:15}}</p>
 </div>

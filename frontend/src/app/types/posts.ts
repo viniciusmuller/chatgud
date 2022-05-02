@@ -6,6 +6,8 @@ export interface Post {
   url?: string;
   body?: string;
   karma: number;
+  creationDate: Date;
+  updateDate: Date;
 }
 
 export interface UserPublic {
@@ -13,6 +15,7 @@ export interface UserPublic {
   username: string;
   comments?: Comment[]
   posts?: Post[]
+  joinDate: Date;
 }
 
 export interface UserPrivate extends UserPublic {
@@ -25,4 +28,6 @@ export interface Comment {
   author?: UserPublic;
   body: string;
   karma: number;
+  creationDate: Date;
+  updateDate: Date;
 }

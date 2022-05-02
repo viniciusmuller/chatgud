@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Post } from '../types/posts';
 
 @Component({
@@ -8,12 +8,15 @@ import { Post } from '../types/posts';
 })
 export class FeedComponent implements OnInit {
   @Input() posts: Post[];
+  @Output('postSelected') postSelectedEvent = new EventEmitter<string>();
 
   constructor() {
     this.posts = [];
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
+  emitPostSelected(post: Post) {
+    this.postSelectedEvent.emit(post.id);
+  }
 }

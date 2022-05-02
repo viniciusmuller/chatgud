@@ -1,6 +1,21 @@
 <div id="post-container">
   <div *ngIf="post; else noCurrentPost">
     <h1>{{post.title}}</h1>
+    <p *ngIf="post.author">
+      by {{post.author.username}}, at: {{post.creationDate | date:'medium'}}
+    </p>
+    <p *ngIf="post.creationDate != post.updateDate">
+      last update at: {{post.updateDate | date:'medium'}}
+    </p>
+
+    <hr>
+    <p id="post-body" *ngIf="post.body">{{post.body}}</p>
+    <hr>
+    <p *ngIf="post.comments" [ngPlural]="post.comments.length">
+      {{post.comments.length}}
+      <ng-template ngPluralCase="=1">comment</ng-template>
+      <ng-template ngPluralCase="other">comments</ng-template>
+    </p>
   </div>
 </div>
 
