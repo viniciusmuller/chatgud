@@ -1,4 +1,8 @@
 defmodule Chatgud.Accounts.User do
+  @moduledoc """
+  Represents an user from the system.
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
 

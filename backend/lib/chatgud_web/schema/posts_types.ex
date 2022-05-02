@@ -1,4 +1,8 @@
 defmodule ChatgudWeb.Schema.PostsTypes do
+  @moduledoc """
+  GraphQL types for posts-related queries.
+  """
+
   use Absinthe.Schema.Notation
   import Absinthe.Resolution.Helpers, only: [dataloader: 3, dataloader: 1]
 

@@ -1,4 +1,8 @@
 defmodule Chatgud.Posts.Comment do
+  @moduledoc """
+  Schema that represents a comment from an user in the application.
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
   import Ecto.Query

@@ -20,6 +20,6 @@ defmodule Chatgud.Security do
   end
 
   def verify_user_token(token) do
-    Phoenix.Token.verify(ChatgudWeb.Endpoint, @user_salt, token, max_age: 86400)
+    Phoenix.Token.verify(ChatgudWeb.Endpoint, @user_salt, token, max_age: 86_400)
   end
 end

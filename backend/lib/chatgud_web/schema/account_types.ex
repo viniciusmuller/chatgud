@@ -1,4 +1,8 @@
 defmodule ChatgudWeb.Schema.AccountTypes do
+  @moduledoc """
+  GraphQL types for accounts-related queries.
+  """
+
   use Absinthe.Schema.Notation
   import Absinthe.Resolution.Helpers, only: [dataloader: 1]
 

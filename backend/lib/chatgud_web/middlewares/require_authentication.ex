@@ -1,4 +1,9 @@
 defmodule ChatgudWeb.Middlewares.RequireAuthentication do
+  @moduledoc """
+  Absinthe middleware that ensures that the current user is providing a valid 
+  authentication token.
+  """
+
   @behaviour Absinthe.Middleware
   alias Chatgud.Accounts
 

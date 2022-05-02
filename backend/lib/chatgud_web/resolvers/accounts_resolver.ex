@@ -1,4 +1,8 @@
 defmodule ChatgudWeb.AccountsResolver do
+  @moduledoc """
+  Helper to resolve accounts-related GraphQL queries.
+  """
+
   alias Chatgud.Accounts
 
   # ------------- Authenticated routes -------------

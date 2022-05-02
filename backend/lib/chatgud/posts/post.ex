@@ -1,4 +1,8 @@
 defmodule Chatgud.Posts.Post do
+  @moduledoc """
+  Schema that represents a post from an user in the application.
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
 

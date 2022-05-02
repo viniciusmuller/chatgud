@@ -1,4 +1,9 @@
 defmodule ChatgudWeb.Middlewares.RequireResourceOwnership do
+  @moduledoc """
+  Absinthe middleware that ensures that the current user is the owner of the
+  resource he is trying to operate on.
+  """
+
   @behaviour Absinthe.Middleware
 
   def call(resolution, config) do

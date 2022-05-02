@@ -1,4 +1,6 @@
 defmodule ChatgudWeb.Helpers.HelperMacros do
+  @moduledoc false
+
   defmacro creation_date() do
     quote do
       field :creation_date, non_null(:naive_datetime) do

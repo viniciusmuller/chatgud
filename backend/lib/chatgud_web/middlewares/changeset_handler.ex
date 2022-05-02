@@ -1,4 +1,8 @@
 defmodule ChatgudWeb.Middlewares.HandleChangesetErrors do
+  @moduledoc """
+  Absinthe middleware that properly formats Ecto changeset validation errors.
+  """
+
   @behaviour Absinthe.Middleware
 
   def call(resolution, _) do

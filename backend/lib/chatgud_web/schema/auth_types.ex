@@ -1,4 +1,8 @@
 defmodule ChatgudWeb.Schema.AuthTypes do
+  @moduledoc """
+  GraphQL types for authentication-related queries.
+  """
+
   use Absinthe.Schema.Notation
 
   object :auth_payload do

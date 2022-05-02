@@ -1,4 +1,8 @@
 defmodule ChatgudWeb.Schema do
+  @moduledoc """
+  Defines GraphQL root schemas.
+  """
+
   use Absinthe.Schema
 
   alias Chatgud.Accounts.User

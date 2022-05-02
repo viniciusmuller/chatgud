@@ -1,4 +1,8 @@
 defmodule ChatgudWeb.PostsResolver do
+  @moduledoc """
+  Helper to resolve posts-related GraphQL queries.
+  """
+
   alias Chatgud.Posts
 
   def last_n_posts(_root, args, _info) do
