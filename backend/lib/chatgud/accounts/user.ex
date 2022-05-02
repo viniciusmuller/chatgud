@@ -3,7 +3,7 @@ defmodule Chatgud.Accounts.User do
   import Ecto.Changeset
 
   alias Chatgud.Security
-  alias Chatgud.Posts.Post
+  alias Chatgud.Posts.{Post, Comment}
 
   @fields ~w(username password email)a
 
@@ -15,16 +15,9 @@ defmodule Chatgud.Accounts.User do
     field :password, :string, virtual: true
     field :password_hash, :string
     has_many :posts, Post, foreign_key: :author_id
+    has_many :comments, Comment, foreign_key: :author_id
 
     timestamps()
-  end
-
-  def data() do
-    Dataloader.Ecto.new(Chatgud.Repo, query: &query/2)
-  end
-
-  def query(queryable, _params) do
-    queryable
   end
 
   @doc false
@@ -42,4 +35,12 @@ defmodule Chatgud.Accounts.User do
   end
 
   defp put_pass_hash(changeset), do: changeset
+
+  def data() do
+    Dataloader.Ecto.new(Chatgud.Repo, query: &query/2)
+  end
+
+  def query(queryable, _params) do
+    queryable
+  end
 end

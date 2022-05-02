@@ -1,14 +1,16 @@
 defmodule ChatgudWeb.Schema.AccountTypes do
   use Absinthe.Schema.Notation
+  import Absinthe.Resolution.Helpers, only: [dataloader: 1]
 
   alias ChatgudWeb.Middlewares
   alias ChatgudWeb.AccountsResolver
+  alias Chatgud.Posts.{Post, Comment}
 
   object :user_public do
     field :id, non_null(:id)
     field :username, non_null(:string)
-    # field :posts, non_null(list_of(:post))
-    # field :comments, non_null(list_of(:comments))
+    field :posts, non_null(list_of(:post)), resolve: dataloader(Post)
+    field :comments, non_null(list_of(:comment)), resolve: dataloader(Comment)
   end
 
   object :user_private do
@@ -50,7 +52,6 @@ defmodule ChatgudWeb.Schema.AccountTypes do
       middleware(Middlewares.HandleChangesetErrors)
     end
 
-    # ---------------- Authenticated routes ----------------
     @desc "Delete user account"
     field :delete_account, :user_private do
       middleware(Middlewares.RequireAuthentication)
