@@ -9,13 +9,19 @@ import { Post, UserPublic } from '../types/posts';
 })
 export class LandingComponent implements OnInit {
   posts?: Post[];
+  openedPosts: { [id: string]: Post } = {};
   currentPost?: Post;
 
   constructor(private postService: PostService) { }
 
   postSelected(postId: string) {
     if (this.posts) {
-      this.currentPost = this.posts.filter(x => x.id == postId)[0]
+      const post = this.posts.filter(x => x.id == postId)[0];
+      this.currentPost = post;
+
+      let newOpenedPosts: { [id: string]: Post } = {}
+      newOpenedPosts[postId] = post;
+      this.openedPosts = Object.assign(newOpenedPosts, this.openedPosts);
     }
   }
 

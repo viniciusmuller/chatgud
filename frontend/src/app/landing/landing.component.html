@@ -2,5 +2,8 @@
 
 <div id="app">
   <app-feed [posts]=posts (postSelected)="postSelected($event)"></app-feed>
-  <app-post id="posts" [post]="currentPost"></app-post>
+  <div>
+    <app-posts-tab [postsMap]="openedPosts"></app-posts-tab>
+    <app-post id="posts" [post]="currentPost"></app-post>
+  </div>
 </div>

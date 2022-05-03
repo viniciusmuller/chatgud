@@ -23,7 +23,31 @@ export class PostService {
         author: this.user
       },
       {
+        id: "uniquee comment id",
+        karma: 0,
+        creationDate: new Date(),
+        updateDate: new Date(),
+        body: "very nice!",
+        author: this.user
+      }
+    ]
+  }
+  post2: Post = {
+    id: "aasfjkdafjklsdfkj;lba", title: "a nice post", karma: 0,
+    body: "a very nice body for a very nice post aaaaaaaaaaaa aaaaaaa cause then yeah tha's true",
+    creationDate: new Date(), updateDate: new Date(),
+    author: this.user,
+    comments: [
+      {
         id: "unique comment id",
+        karma: 0,
+        creationDate: new Date(),
+        updateDate: new Date(),
+        body: "very nice!",
+        author: this.user
+      },
+      {
+        id: "uniquee comment id",
         karma: 0,
         creationDate: new Date(),
         updateDate: new Date(),
@@ -36,14 +60,7 @@ export class PostService {
   getPosts(): Post[] {
     return [
       this.post,
-      this.post,
-      this.post,
-      this.post,
-      this.post,
-      this.post,
-      this.post,
-      this.post,
-      this.post,
+      this.post2
     ]
   }
 

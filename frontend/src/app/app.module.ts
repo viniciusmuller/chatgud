@@ -14,6 +14,7 @@ import { TruncatePipe } from './pipes/truncate.pipe';
 import { PostComponent } from './post/post.component';
 import { CommentComponent } from './comment/comment.component';
 import { CommentTreeComponent } from './comment-tree/comment-tree.component';
+import { PostsTabComponent } from './posts-tab/posts-tab.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { CommentTreeComponent } from './comment-tree/comment-tree.component';
     TruncatePipe,
     PostComponent,
     CommentComponent,
-    CommentTreeComponent
+    CommentTreeComponent,
+    PostsTabComponent
   ],
   imports: [
     BrowserModule,

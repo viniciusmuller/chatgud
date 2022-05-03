@@ -1,0 +1,10 @@
+<div *ngIf="posts && posts.length > 0; else invisibleButton" id="posts-tab">
+  <div *ngFor="let post of posts">
+    <input type="button" value="{{post.title | truncate:15:5}}"/>
+  </div>
+</div>
+<hr>
+
+<ng-template #invisibleButton>
+  <input type="button" style="display: none" />
+</ng-template>

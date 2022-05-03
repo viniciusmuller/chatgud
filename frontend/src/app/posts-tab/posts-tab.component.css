@@ -1,0 +1,8 @@
+#posts-tab {
+  display: flex;
+}
+
+#posts-tab input {
+  max-width: 100px;
+  margin-right: 7px;
+}
