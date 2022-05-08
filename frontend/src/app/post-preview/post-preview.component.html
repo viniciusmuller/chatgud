@@ -1,5 +1,5 @@
 <div *ngIf="post">
-  <h2>{{post.karma}} - {{post.title}}</h2>
+  <h2>{{post.title}}</h2>
   <p *ngIf="post.author">
     by {{post.author.username}}, at: {{post.creationDate | date:'medium'}}
   </p>

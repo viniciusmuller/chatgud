@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { PostService } from '../post.service';
 import { Post, UserPublic } from '../types/posts';
 
 @Component({
@@ -8,24 +7,15 @@ import { Post, UserPublic } from '../types/posts';
   styleUrls: ['./landing.component.css']
 })
 export class LandingComponent implements OnInit {
-  posts?: Post[];
   openedPosts: { [id: string]: Post } = {};
   currentPost?: Post;
+  loading: boolean = true;
 
-  constructor(private postService: PostService) { }
+  constructor() { }
 
-  postSelected(postId: string) {
-    if (this.posts) {
-      const post = this.posts.filter(x => x.id == postId)[0];
-      this.currentPost = post;
-
-      let newOpenedPosts: { [id: string]: Post } = {}
-      newOpenedPosts[postId] = post;
-      this.openedPosts = Object.assign(newOpenedPosts, this.openedPosts);
-    }
+  postSelected(post: Post) {
+    this.currentPost = post;
   }
 
-  ngOnInit(): void {
-    this.posts = this.postService.getPosts();
-  }
+  ngOnInit(): void { }
 }

@@ -1,7 +1,7 @@
 <app-navbar></app-navbar>
 
 <div id="app">
-  <app-feed [posts]=posts (postSelected)="postSelected($event)"></app-feed>
+  <app-feed (postSelected)="postSelected($event)"></app-feed>
   <div>
     <app-posts-tab [postsMap]="openedPosts"></app-posts-tab>
     <app-post id="posts" [post]="currentPost"></app-post>

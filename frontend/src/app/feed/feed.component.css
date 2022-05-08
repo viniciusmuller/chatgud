@@ -7,7 +7,7 @@
   margin-bottom: 7%;
 }
 
-#no-posts {
+.center {
   display: flex;
   align-items: center;
   justify-content: center;

@@ -1,7 +1,8 @@
 defmodule ChatgudWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :chatgud
-
   use Absinthe.Phoenix.Endpoint
+
+  plug CORSPlug
 
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.

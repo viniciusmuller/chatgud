@@ -5,17 +5,16 @@ export interface Post {
   title: string;
   url?: string;
   body?: string;
-  karma: number;
-  creationDate: Date;
-  updateDate: Date;
+  creationDate?: Date;
+  updateDate?: Date;
 }
 
 export interface UserPublic {
   id: string;
-  username: string;
+  username?: string;
   comments?: Comment[]
   posts?: Post[]
-  joinDate: Date;
+  joinDate?: Date;
 }
 
 export interface UserPrivate extends UserPublic {
@@ -27,8 +26,7 @@ export interface Comment {
   parentId?: string;
   post?: Post;
   author?: UserPublic;
-  body: string;
-  karma: number;
-  creationDate: Date;
-  updateDate: Date;
+  body?: string;
+  creationDate?: Date;
+  updateDate?: Date;
 }

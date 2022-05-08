@@ -34,6 +34,7 @@ defmodule Chatgud.MixProject do
   defp deps do
     [
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
+      {:cors_plug, "~> 3.0"},
       {:dataloader, "~> 1.0"},
       {:argon2_elixir, "~> 3.0"},
       {:absinthe_phoenix, "~> 2.0"},

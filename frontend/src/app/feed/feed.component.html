@@ -1,4 +1,18 @@
 <div id="feed">
+  <div class="center" *ngIf="loading; else feed">
+    <h1>Loading...</h1>
+  </div>
+</div>
+
+<ng-template #noPosts>
+  <div class="center">
+    <h2>No posts yet</h2>
+    <p>It seems that there are no posts yet, why not create the first one?</p>
+    <button type="button">Create post</button>
+  </div>
+</ng-template>
+
+<ng-template #feed>
   <div *ngIf="posts && posts.length > 0; else noPosts">
     <button type="button">Create post</button>
       <hr>
@@ -11,13 +25,5 @@
       </div>
       <hr>
     </div>
-  </div>
-</div>
-
-<ng-template #noPosts>
-  <div id="no-posts">
-    <h2>No posts yet</h2>
-    <p>It seems that there are no posts yet, why not create the first one?</p>
-    <button type="button">Create post</button>
   </div>
 </ng-template>
